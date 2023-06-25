@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1>Weather App</h1>
+
+  <div id="weather-container"></div>
+
+  <script>
+    $(document).ready(function() {
+      const apiKey = 'e86e1232d220487290c73421230406';
+      const city = 'Lahore';
+      const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
+
+      $.getJSON(apiUrl, function(data) {
+        const temperature = data.current.temp_c;
+        const condition = data.current.condition.text;
+        const humidity = data.current.humidity;
+        const windSpeed = data.current.wind_kph;
+        const windDirection = data.current.wind_dir;
+        const pressure = data.current.pressure_mb;
+        const precipitation = data.current.precip_mm;
+        const visibility = data.current.vis_km;
+        const weatherIcon = data.current.condition.icon;
+
+        const weatherContent = `
+          <p>Temperature: ${temperature} °C</p>
+          <p>Condition: ${condition}</p>
+          <p>Humidity: ${humidity}%</p>
+          <p>Wind Speed: ${windSpeed} km/h</p>
+          <p>Wind Direction: ${windDirection}</p>
+          <p>Pressure: ${pressure} mb</p>
+          <p>Precipitation: ${precipitation} mm</p>
+          <p>Visibility: ${visibility} km</p>
+          <img src="${weatherIcon}" alt="Weather Icon">
+        `;
+
+        $('#weather-container').html(weatherContent);
+      });
+    });
+  </script>
+</body>
+</html>
